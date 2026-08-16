@@ -3,126 +3,329 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>Zuxcyn Preset & Pack</title>
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#08090d;color:#fff;font-family:Arial,sans-serif}
-header{padding:14px 18px;border-bottom:1px solid #282b36;background:#0c0d12;display:flex;align-items:center;gap:12px}
-.logo{width:48px;height:48px;border-radius:13px;object-fit:cover}
-.brand{font-weight:800}.sub{font-size:12px;color:#999}
-main{max-width:1000px;margin:auto;padding:30px 18px}
-.hero{padding:15px 0 25px}.hero h1{font-size:42px;margin:0 0 8px}
-.hero p{color:#aaa;line-height:1.6}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
-.card{background:#12141b;border:1px solid #292d39;border-radius:20px;overflow:hidden}
-.preview{width:100%;height:230px;object-fit:cover;background:#191b23}
-.content{padding:20px}.tag{font-size:11px;color:#bbc1ff}
-.title{font-size:21px;margin:8px 0}
-.desc{color:#a5a9b6;font-size:13px;line-height:1.5}
-.price{font-size:20px;font-weight:800;margin-top:12px}
-.buy{width:100%;padding:13px;border:0;border-radius:12px;background:#fff;color:#08090d;font-weight:800;cursor:pointer;margin-top:12px}
-.steps{margin-top:25px;padding:18px;border:1px solid #303441;border-radius:16px;background:#101219;color:#c4c8d4;font-size:13px;line-height:1.7}
-.notice{display:none;margin-top:12px;padding:14px;border-radius:13px;background:#151a16;border:1px solid #35533b;color:#bdebc3}
-.notice a{display:block;margin-top:10px;color:#fff;font-weight:800;text-decoration:none}
-.modal{position:fixed;inset:0;background:#000c;display:flex;align-items:center;justify-content:center;padding:18px;z-index:9}
-.modal.hide{display:none}
-.box{max-width:420px;background:#12151d;border:1px solid #303441;border-radius:20px;padding:24px;text-align:center}
-.box p{color:#afb3c0;line-height:1.55}
-.tiktok{display:block;padding:13px;border-radius:12px;background:#ff2d55;color:#fff;text-decoration:none;font-weight:800}
-.close{margin-top:10px;padding:11px 15px;border:0;border-radius:10px;background:#292d39;color:#fff}
-footer{text-align:center;color:#666b7a;padding:35px 10px;font-size:12px}
-.loading{text-align:center;color:#aaa;padding:30px}
+
+body{
+  margin:0;
+  background:#08090d;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+
+header{
+  padding:14px 18px;
+  border-bottom:1px solid #282b36;
+  background:#0c0d12;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo{
+  width:48px;
+  height:48px;
+  border-radius:13px;
+  object-fit:cover;
+}
+
+.brand{font-weight:800}
+.sub{font-size:12px;color:#999}
+
+main{
+  max-width:1000px;
+  margin:auto;
+  padding:30px 18px;
+}
+
+.hero{
+  padding:15px 0 25px;
+}
+
+.hero h1{
+  font-size:42px;
+  margin:0 0 8px;
+}
+
+.hero p{
+  color:#aaa;
+  line-height:1.6;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:#12141b;
+  border:1px solid #292d39;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.preview{
+  width:100%;
+  height:230px;
+  object-fit:cover;
+  background:#191b23;
+}
+
+.content{
+  padding:20px;
+}
+
+.tag{
+  font-size:11px;
+  color:#bbc1ff;
+}
+
+.title{
+  font-size:21px;
+  margin:8px 0;
+}
+
+.desc{
+  color:#a5a9b6;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.buy,
+.check{
+  width:100%;
+  padding:13px;
+  border:0;
+  border-radius:12px;
+  background:#fff;
+  color:#08090d;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:12px;
+}
+
+.notice{
+  display:none;
+  margin-top:12px;
+  padding:14px;
+  border-radius:13px;
+  background:#151a16;
+  border:1px solid #35533b;
+  color:#bdebc3;
+  line-height:1.6;
+}
+
+.notice a{
+  display:block;
+  margin-top:10px;
+  padding:12px;
+  border-radius:10px;
+  background:#fff;
+  color:#08090d;
+  font-weight:800;
+  text-decoration:none;
+  text-align:center;
+}
+
+.check-box{
+  margin-top:30px;
+  padding:20px;
+  border:1px solid #303441;
+  border-radius:16px;
+  background:#101219;
+}
+
+.check-box input{
+  width:100%;
+  padding:13px;
+  border-radius:10px;
+  border:1px solid #444;
+  background:#08090d;
+  color:#fff;
+  margin-top:10px;
+}
+
+.status{
+  margin-top:12px;
+  line-height:1.6;
+}
+
+.steps{
+  margin-top:25px;
+  padding:18px;
+  border:1px solid #303441;
+  border-radius:16px;
+  background:#101219;
+  color:#c4c8d4;
+  font-size:13px;
+  line-height:1.7;
+}
+
+footer{
+  text-align:center;
+  color:#666b7a;
+  padding:35px 10px;
+  font-size:12px;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#000c;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9;
+}
+
+.modal.hide{
+  display:none;
+}
+
+.box{
+  max-width:420px;
+  background:#12151d;
+  border:1px solid #303441;
+  border-radius:20px;
+  padding:24px;
+  text-align:center;
+}
+
+.box p{
+  color:#afb3c0;
+  line-height:1.55;
+}
+
+.tiktok{
+  display:block;
+  padding:13px;
+  border-radius:12px;
+  background:#ff2d55;
+  color:#fff;
+  text-decoration:none;
+  font-weight:800;
+}
+
+.close{
+  margin-top:10px;
+  padding:11px 15px;
+  border:0;
+  border-radius:10px;
+  background:#292d39;
+  color:#fff;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<img src="zuxcyn.jpg" class="logo" alt="Zuxcyn"
-onerror="this.style.display='none'">
+<img src="zuxcyn.jpg" class="logo" alt="Zuxcyn">
 <div>
-<div class="brand">Preset & Pack Edit</div>
-<div class="sub">By: Zuxcyn</div>
+  <div class="brand">Preset & Pack Edit</div>
+  <div class="sub">By: Zuxcyn</div>
 </div>
 </header>
 
+
 <div id="popup" class="modal">
 <div class="box">
-<h2>👋 Selamat datang!</h2>
-<p>Jangan lupa follow TikTok <b>@zuxcynn</b> untuk mendukung Zuxcyn.</p>
 
-<a class="tiktok"
+<h2>👋 Selamat datang!</h2>
+
+<p>
+Jangan lupa follow TikTok
+<b>@zuxcynn</b>
+untuk mendukung Zuxcyn.
+</p>
+
+<a
+class="tiktok"
 href="https://www.tiktok.com/@zuxcynn"
 target="_blank">
 Follow TikTok @zuxcynn
 </a>
 
-<button class="close" onclick="closePopup()">
+<button
+class="close"
+onclick="closePopup()">
 Lanjut ke website
 </button>
+
 </div>
 </div>
+
 
 <main>
 
 <section class="hero">
+
 <h1>Preset & Pack Edit ⚡</h1>
+
 <p>
-Pilih produk yang kamu inginkan. Setelah pembelian,
-ikuti alur konfirmasi untuk mendapatkan akses produk.
+Pilih produk yang kamu inginkan.
+Setelah pembelian, simpan kode pesananmu.
+Setelah pesanan dikonfirmasi penjual,
+cek kode untuk mendapatkan akses.
 </p>
+
 </section>
+
 
 <section class="grid">
 
-<!-- PRODUK DARI FIRESTORE -->
+
 <article class="card">
 
-<img class="preview"
+<img
+class="preview"
 src="preset_lenkap.jpg"
-alt="FULL EDIT"
-onerror="this.src='https://placehold.co/900x600/171923/fff?text=FULL+EDIT'">
+alt="FULL EDIT">
 
 <div class="content">
 
 <div class="tag">PRESET</div>
 
-<h2 class="title" id="product-name">
-Memuat produk...
+<h2 class="title">
+FULL EDIT
 </h2>
 
-<p class="desc" id="product-description">
-Memuat deskripsi...
+<p class="desc">
+Preset lengkap untuk kebutuhan edit Alight Motion.
 </p>
 
-<div class="price" id="product-price">
-...
-</div>
-
-<button class="buy"
-id="buy-full"
-onclick="buyFull()">
+<button
+class="buy"
+onclick="buy('FULL EDIT','full')">
 Beli Pack & Preset
 </button>
 
-<div id="notice-full" class="notice"></div>
+<div
+id="notice-full"
+class="notice">
+</div>
 
 </div>
 </article>
 
 
-<!-- PRODUK KEDUA -->
 <article class="card">
 
-<img class="preview"
+<img
+class="preview"
 src="Pack.jpg"
-alt="+7 Badaa transition by: Zuxcyn"
-onerror="this.src='https://placehold.co/900x600/171923/fff?text=%2B7+Badaa+Transition'">
+alt="+7 Badaa transition">
 
 <div class="content">
 
-<div class="tag">TRANSITION PACK</div>
+<div class="tag">
+TRANSITION PACK
+</div>
 
 <h2 class="title">
 +7 Badaa transition by: Zuxcyn
@@ -132,30 +335,64 @@ onerror="this.src='https://placehold.co/900x600/171923/fff?text=%2B7+Badaa+Trans
 Pack transition untuk workflow edit Alight Motion.
 </p>
 
-<button class="buy"
-onclick="buy(
-'+7 Badaa transition by: Zuxcyn',
-'badaa'
-)">
+<button
+class="buy"
+onclick="buy('+7 Badaa transition by: Zuxcyn','badaa')">
 Beli Pack
 </button>
 
-<div id="notice-badaa" class="notice"></div>
+<div
+id="notice-badaa"
+class="notice">
+</div>
 
 </div>
 </article>
 
 </section>
 
+
+<div class="check-box">
+
+<h2>🔐 Cek Akses Pesanan</h2>
+
+<p>
+Masukkan kode pesanan yang kamu dapat setelah membeli.
+</p>
+
+<input
+id="checkCode"
+placeholder="Contoh: ZUX-ABC123">
+
+<button
+class="check"
+onclick="checkOrder()">
+🔎 Cek Pesanan
+</button>
+
+<div
+id="status"
+class="status">
+</div>
+
+</div>
+
+
 <div class="steps">
+
 <b>Alur pembelian:</b><br>
-1. Tekan <b>Beli</b> → WhatsApp terbuka.<br>
-2. Kirim pesan pesanan ke penjual.<br>
-3. Penjual melakukan konfirmasi melalui Gmail.<br>
-4. Setelah konfirmasi selesai, akses produk diberikan oleh penjual.
+
+1. Tekan <b>Beli</b>.<br>
+2. Simpan kode pesanan.<br>
+3. Hubungi WhatsApp penjual.<br>
+4. Penjual mengonfirmasi pesanan.<br>
+5. Masukkan kode di bagian <b>Cek Akses Pesanan</b>.<br>
+6. Jika sudah dikonfirmasi, tombol akses preset akan muncul.
+
 </div>
 
 </main>
+
 
 <footer>
 © 2026 Zuxcyn — Preset & Pack Edit
@@ -164,170 +401,126 @@ Beli Pack
 
 <script type="module">
 
-/* =========================
-   FIREBASE
-========================= */
-
-import { initializeApp }
+import {
+  initializeApp
+}
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
+
 import {
-getFirestore,
-doc,
-getDoc
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc
 }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyDPCsj9d_k8JESG18yZp9VC6Nw3YPtJKo4",
+  apiKey:
+  "AIzaSyDPCsj9d_k8JESG18yZp9VC6Nw3YPtJKo4",
 
-authDomain: "zuxcyn-store.firebaseapp.com",
+  authDomain:
+  "zuxcyn-store.firebaseapp.com",
 
-projectId: "zuxcyn-store",
+  projectId:
+  "zuxcyn-store",
 
-storageBucket: "zuxcyn-store.firebasestorage.app",
+  storageBucket:
+  "zuxcyn-store.firebasestorage.app",
 
-messagingSenderId: "132695006669",
+  messagingSenderId:
+  "132695006669",
 
-appId: "1:132695006669:web:443f37b12bd01ad3323884",
+  appId:
+  "1:132695006669:web:443f37b12bd01ad3323884",
 
-measurementId: "G-Z5PJQ24K9W"
+  measurementId:
+  "G-Z5PJQ24K9W"
+};
+
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+
+const WA =
+"6283848223299";
+
+
+const links = {
+
+  full:
+  "https://alightcreative.com/am/share/u/HOOqSCWvegQQAJaKpPpOutWquMu1/p/XlCvUW5ze8-a614ba8f95b94bfe",
+
+  badaa:
+  "https://alightcreative.com/am/share/u/ORedvT0kuPbIaRkh2ZQQef2oAju2/p/oSdMFDryih-5038213ac6c8f450"
 
 };
 
 
-const app = initializeApp(firebaseConfig);
+function closePopup(){
 
-const db = getFirestore(app);
+  localStorage.setItem(
+    "zux_popup",
+    "1"
+  );
 
-
-/* =========================
-   AMBIL PRODUK FIRESTORE
-========================= */
-
-let fullProduct = null;
-
-async function loadProduct(){
-
-try{
-
-const ref = doc(db,"products","full-edit");
-
-const snap = await getDoc(ref);
-
-if(!snap.exists()){
-
-document.getElementById("product-name").textContent =
-"Produk tidak ditemukan";
-
-document.getElementById("product-description").textContent =
-"Data produk belum tersedia.";
-
-document.getElementById("product-price").textContent =
-"";
-
-return;
+  document
+  .getElementById("popup")
+  .classList
+  .add("hide");
 }
 
 
-fullProduct = snap.data();
+if(
+  localStorage.getItem("zux_popup")
+  ===
+  "1"
+){
 
-
-document.getElementById("product-name").textContent =
-fullProduct.name || "FULL EDIT";
-
-
-document.getElementById("product-description").textContent =
-fullProduct.description || "Preset lengkap untuk kebutuhan edit.";
-
-
-document.getElementById("product-price").textContent =
-fullProduct.price
-? "Rp " + Number(fullProduct.price).toLocaleString("id-ID")
-: "";
-
-
-}catch(error){
-
-console.error(error);
-
-document.getElementById("product-name").textContent =
-"FULL EDIT";
-
-document.getElementById("product-description").textContent =
-"Gagal mengambil data produk.";
-
-}
+  closePopup();
 
 }
 
 
-loadProduct();
+window.buy =
+async function(name,key){
+
+  const code =
+  "ZUX-" +
+  Math.random()
+  .toString(36)
+  .slice(2,8)
+  .toUpperCase();
 
 
-/* =========================
-   POPUP
-========================= */
+  try{
 
-window.closePopup = function(){
+    await setDoc(
+      doc(db,"orders",code),
+      {
 
-localStorage.setItem("zux_popup","1");
+        product:name,
 
-document.getElementById("popup")
-.classList.add("hide");
+        productKey:key,
 
-};
+        approved:false,
 
+        link:links[key],
 
-if(localStorage.getItem("zux_popup")==="1"){
+        createdAt:
+        new Date().toISOString()
 
-document.getElementById("popup")
-.classList.add("hide");
-
-}
-
-
-/* =========================
-   PEMBELIAN FULL EDIT
-========================= */
-
-window.buyFull = function(){
-
-if(!fullProduct){
-
-alert("Data produk masih dimuat. Coba lagi sebentar.");
-
-return;
-
-}
+      }
+    );
 
 
-const name = fullProduct.name || "FULL EDIT";
-
-const wa = fullProduct.whatsapp || "6283848223299";
-
-buy(name,"full",wa);
-
-};
-
-
-/* =========================
-   PEMBELIAN
-========================= */
-
-window.buy = function(name,key,wa="6283848223299"){
-
-const code =
-"ZUX-" +
-Math.random()
-.toString(36)
-.slice(2,8)
-.toUpperCase();
-
-
-const waText =
+    const waText =
 `Halo Zuxcyn, saya ingin membeli ${name}.
 
 Kode pesanan: ${code}
@@ -335,49 +528,178 @@ Kode pesanan: ${code}
 Mohon konfirmasi pesanan saya.`;
 
 
-window.open(
-`https://wa.me/${wa}?text=${encodeURIComponent(waText)}`,
-"_blank"
-);
+    window.open(
+      `https://wa.me/${WA}?text=${encodeURIComponent(waText)}`,
+      "_blank"
+    );
 
 
-const n =
-document.getElementById("notice-"+key);
+    const notice =
+    document.getElementById(
+      "notice-"+key
+    );
 
 
-if(n){
+    notice.style.display =
+    "block";
 
-n.style.display="block";
+
+    notice.innerHTML = `
+      <b>✅ Pesanan dibuat!</b><br>
+      Kode pesanan kamu:
+      <b>${code}</b><br><br>
+
+      Simpan kode ini dan kirim ke WhatsApp
+      penjual untuk konfirmasi.
+
+      <a href="#cek"
+      onclick="document.getElementById('checkCode').value='${code}'">
+      🔐 Cek Status Pesanan
+      </a>
+    `;
 
 
-n.innerHTML = `
-Pesanan <b>${code}</b> dibuat.<br>
-Silakan konfirmasi pesanan melalui WhatsApp.
+  }catch(error){
 
-<a href="mailto:ggpyni@gmail.com?subject=${encodeURIComponent(
-"Konfirmasi Pesanan "+code
-)}&body=${encodeURIComponent(
-`Halo Zuxcyn,
+    alert(
+      "Gagal membuat pesanan: "
+      + error.message
+    );
 
-Saya ingin konfirmasi pesanan ${name}.
+  }
 
-Kode pesanan: ${code}
+};
 
-Terima kasih.`
-)}">
-📧 Konfirmasi via Gmail
-</a>
 
-<small style="display:block;margin-top:10px;color:#8f95a5">
-Setelah penjual mengonfirmasi, akses/link produk dapat diberikan.
-</small>
-`;
+window.checkOrder =
+async function(){
 
-}
+  const code =
+  document
+  .getElementById("checkCode")
+  .value
+  .trim()
+  .toUpperCase();
+
+
+  const status =
+  document.getElementById("status");
+
+
+  if(!code){
+
+    status.innerHTML =
+    "⚠️ Masukkan kode pesanan.";
+
+    return;
+
+  }
+
+
+  status.innerHTML =
+  "⏳ Mengecek pesanan...";
+
+
+  try{
+
+    const snap =
+    await getDoc(
+      doc(db,"orders",code)
+    );
+
+
+    if(!snap.exists()){
+
+      status.innerHTML =
+      "❌ Kode pesanan tidak ditemukan.";
+
+      return;
+
+    }
+
+
+    const data =
+    snap.data();
+
+
+    if(data.approved === true){
+
+      status.innerHTML = `
+
+        <div style="
+          padding:15px;
+          border-radius:12px;
+          background:#151a16;
+          border:1px solid #35533b;
+        ">
+
+        <b>✅ PESANAN SUDAH DIKONFIRMASI!</b>
+
+        <br><br>
+
+        Produk:
+        <b>${data.product}</b>
+
+        <br><br>
+
+        <a
+        href="${data.link}"
+        target="_blank"
+        style="
+          display:block;
+          padding:13px;
+          border-radius:10px;
+          background:white;
+          color:#08090d;
+          text-align:center;
+          font-weight:bold;
+          text-decoration:none;
+        ">
+        🔓 BUKA PRESET
+        </a>
+
+        </div>
+
+      `;
+
+    }else{
+
+      status.innerHTML = `
+
+        <div style="
+          padding:15px;
+          border-radius:12px;
+          background:#17151a;
+          border:1px solid #49404f;
+        ">
+
+        ⏳ Pesanan belum dikonfirmasi.
+
+        <br><br>
+
+        Silakan tunggu konfirmasi dari
+        penjual.
+
+        </div>
+
+      `;
+
+    }
+
+
+  }catch(error){
+
+    console.error(error);
+
+    status.innerHTML =
+    "❌ Gagal mengecek pesanan.<br>"
+    + error.message;
+
+  }
 
 };
 
 </script>
 
 </body>
-</html>
+   </html>
