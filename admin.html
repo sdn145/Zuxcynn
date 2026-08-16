@@ -1,0 +1,44 @@
+<button onclick="confirmOrder()">✅ Konfirmasi Pesanan</button>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+import {
+  getFirestore,
+  doc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDPCsj9d_k8JESG18yZp9VC6Nw3YPtJKo4",
+  authDomain: "zuxcyn-store.firebaseapp.com",
+  projectId: "zuxcyn-store",
+  storageBucket: "zuxcyn-store.firebasestorage.app",
+  messagingSenderId: "132695006669",
+  appId: "1:132695006669:web:443f37b12bd01ad3323884"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.confirmOrder = async function () {
+  const code = prompt("Masukkan kode pesanan pembeli:");
+
+  if (!code) return;
+
+  try {
+    await setDoc(
+      doc(db, "orders", code),
+      {
+        status: "confirmed",
+        confirmedAt: new Date().toISOString()
+      },
+      { merge: true }
+    );
+
+    alert("✅ Pesanan " + code + " berhasil dikonfirmasi!");
+  } catch (error) {
+    console.error(error);
+    alert("❌ Gagal mengonfirmasi: " + error.message);
+  }
+};
+</script>
