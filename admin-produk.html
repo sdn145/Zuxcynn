@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Admin Produk</title>
+
+<style>
+
+body{
+  margin:0;
+  padding:20px;
+  background:#050608;
+  color:white;
+  font-family:Arial,sans-serif;
+}
+
+.box{
+  max-width:700px;
+  margin:auto;
+  background:#11141b;
+  border:1px solid #292e39;
+  border-radius:18px;
+  padding:20px;
+}
+
+input,
+textarea{
+  width:100%;
+  box-sizing:border-box;
+  margin:8px 0 16px;
+  padding:14px;
+  border-radius:10px;
+  border:1px solid #303542;
+  background:#07090d;
+  color:white;
+  font-size:15px;
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.product{
+  border-top:1px solid #303542;
+  padding:18px 0;
+}
+
+.delete{
+  background:#541b22;
+  color:white;
+  margin-top:10px;
+}
+
+#message{
+  margin-top:15px;
+  padding:12px;
+  border-radius:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>📦 Admin Produk</h1>
+
+<label>Nama Produk</label>
+
+<input
+  id="name"
+  placeholder="Contoh: Badas"
+>
+
+<label>Harga</label>
+
+<input
+  id="price"
+  type="number"
+  placeholder="5000"
+>
+
+<label>Deskripsi</label>
+
+<textarea
+  id="description"
+  placeholder="Deskripsi produk..."
+></textarea>
+
+<label>URL Foto Produk</label>
+
+<input
+  id="image"
+  placeholder="https://..."
+>
+
+<label>URL Download Produk</label>
+
+<input
+  id="downloadUrl"
+  placeholder="https://..."
+>
+
+<button onclick="addProduct()">
+  ➕ Tambah Produk
+</button>
+
+<div id="message"></div>
+
+<hr>
+
+<h2>📦 Produk Saat Ini</h2>
+
+<div id="list">
+Memuat...
+</div>
+
+</div>
+
+<script type="module">
+
+import {
+
+  db,
+  initFirebase,
+  collection,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+  serverTimestamp
+
+} from "./firebase-config.js";
+
+const list =
+  document.getElementById("list");
+
+const message =
+  document.getElementById("message");
+
+function escapeHTML(text){
+
+  return String(text ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+window.addProduct = async function(){
+
+  const name =
+    document.getElementById("name").value.trim();
+
+  const price =
+    Number(
+      document.getElementById("price").value
+    );
+
+  const description =
+    document.getElementById("description").value.trim();
+
+  const image =
+    document.getElementById("image").value.trim();
+
+  const downloadUrl =
+    document.getElementById("downloadUrl").value.trim();
+
+  if(!name){
+
+    alert("Masukkan nama produk.");
+
+    return;
+
+  }
+
+  if(!price){
+
+    alert("Masukkan harga.");
+
+    return;
+
+  }
+
+  if(!image){
+
+    alert("Masukkan URL foto.");
+
+    return;
+
+  }
+
+  try{
+
+    await initFirebase();
+
+    await addDoc(
+      collection(db,"products"),
+      {
+
+        name:name,
+
+        price:price,
+
+        description:description,
+
+        image:image,
+
+        downloadUrl:downloadUrl,
+
+        createdAt:serverTimestamp(),
+
+        createdAtMs:Date.now()
+
+      }
+    );
+
+    message.innerHTML =
+      "✅ Produk berhasil ditambahkan ke website utama.";
+
+    message.style.background =
+      "#102218";
+
+    document.getElementById("name").value="";
+    document.getElementById("price").value="";
+    document.getElementById("description").value="";
+    document.getElementById("image").value="";
+    document.getElementById("downloadUrl").value="";
+
+    loadProducts();
+
+  }catch(error){
+
+    message.innerHTML =
+      "❌ " + escapeHTML(error.message);
+
+    message.style.background =
+      "#281318";
+
+    console.error(error);
+
+  }
+
+};
+
+async function loadProducts(){
+
+  try{
+
+    await initFirebase();
+
+    const snapshot =
+      await getDocs(
+        collection(db,"products")
+      );
+
+    list.innerHTML="";
+
+    snapshot.forEach(item => {
+
+      const data=item.data();
+
+      const div=
+        document.createElement("div");
+
+      div.className="product";
+
+      div.innerHTML=`
+
+        <h3>
+          ${escapeHTML(data.name)}
+        </h3>
+
+        <p>
+          Rp${Number(data.price || 0).toLocaleString("id-ID")}
+        </p>
+
+        <p>
+          ${escapeHTML(data.description)}
+        </p>
+
+        <img
+          src="${escapeHTML(data.image)}"
+          style="
+            width:100%;
+            max-height:250px;
+            object-fit:cover;
+            border-radius:10px;
+          "
+          onerror="
+            this.style.display='none'
+          "
+        >
+
+        <button
+          class="delete"
+          data-id="${item.id}"
+        >
+          🗑 Hapus Produk
+        </button>
+
+      `;
+
+      div.querySelector(".delete")
+        .addEventListener("click",async()=>{
+
+          if(!confirm(
+            `Hapus ${data.name}?`
+          )) return;
+
+          try{
+
+            await deleteDoc(
+              doc(db,"products",item.id)
+            );
+
+            loadProducts();
+
+          }catch(error){
+
+            alert(error.message);
+
+          }
+
+        });
+
+      list.appendChild(div);
+
+    });
+
+  }catch(error){
+
+    list.innerHTML =
+      "❌ " + escapeHTML(error.message);
+
+  }
+
+}
+
+loadProducts();
+
+</script>
+
+</body>
+</html>

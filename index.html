@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Preset & Pack Edit ⚡</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#050608;
+  color:#f5f5f5;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+.container{
+  width:min(1000px,94%);
+  margin:auto;
+}
+
+header{
+  padding:24px 0;
+}
+
+header h1{
+  margin:0 0 8px;
+  font-size:28px;
+}
+
+header p{
+  color:#999;
+  margin:0;
+}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.card{
+  background:#11141b;
+  border:1px solid #292e39;
+  border-radius:18px;
+  overflow:hidden;
+}
+
+.product-img{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+  display:block;
+  background:#171a21;
+}
+
+.content{
+  padding:18px;
+}
+
+.badge{
+  display:inline-block;
+  background:#1d2230;
+  color:#aaa;
+  padding:7px 10px;
+  border-radius:9px;
+  font-size:11px;
+  margin-bottom:12px;
+}
+
+h2{
+  margin:0 0 10px;
+}
+
+.desc{
+  color:#999;
+  line-height:1.6;
+  min-height:48px;
+}
+
+.price{
+  font-size:22px;
+  font-weight:bold;
+  margin:20px 0;
+}
+
+.buy{
+  width:100%;
+  border:0;
+  border-radius:10px;
+  padding:13px;
+  font-weight:bold;
+  font-size:15px;
+  cursor:pointer;
+}
+
+.empty{
+  background:#11141b;
+  border:1px solid #292e39;
+  padding:30px;
+  text-align:center;
+  border-radius:15px;
+  color:#999;
+}
+
+#status{
+  margin:15px 0;
+  padding:12px;
+  border-radius:10px;
+  display:none;
+}
+
+@media(max-width:700px){
+  .products{
+    grid-template-columns:1fr;
+  }
+
+  .product-img{
+    height:220px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+  <h1>Preset & Pack Edit ⚡</h1>
+  <p>
+    Pilih produk yang kamu inginkan. Setelah membeli,
+    simpan kode pesanan dan hubungi admin WhatsApp untuk konfirmasi.
+  </p>
+</header>
+
+<div id="status"></div>
+
+<div id="products" class="products">
+  <div class="empty">Memuat produk...</div>
+</div>
+
+<br>
+
+<section class="card">
+  <div class="content">
+
+    <h2>🔐 Cek Akses Pesanan</h2>
+
+    <p class="desc">
+      Masukkan kode pesanan yang kamu dapat setelah membeli.
+    </p>
+
+    <input
+      id="orderCode"
+      placeholder="Contoh: ZUX-ABC123"
+      style="
+        width:100%;
+        padding:15px;
+        background:#07090d;
+        border:1px solid #303542;
+        color:white;
+        border-radius:10px;
+        font-size:15px;
+      "
+    >
+
+    <br><br>
+
+    <button class="buy" onclick="checkOrder()">
+      🔎 Cek Pesanan
+    </button>
+
+    <div id="orderResult"></div>
+
+  </div>
+</section>
+
+<br>
+
+<section class="card">
+<div class="content">
+
+<h2>📋 Cara pembelian</h2>
+
+<p class="desc">
+1. Tekan tombol beli pada produk.<br>
+2. Website membuat kode pesanan.<br>
+3. WhatsApp admin akan terbuka.<br>
+4. Kirim pesan pesanan kepada admin.<br>
+5. Admin mengonfirmasi pembayaran.<br>
+6. Masukkan kode pesanan di Cek Pesanan.
+</p>
+
+</div>
+</section>
+
+</div>
+
+<script type="module">
+
+import {
+  db,
+  initFirebase,
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+  getDoc,
+  serverTimestamp
+} from "./firebase-config.js";
+
+const productsEl = document.getElementById("products");
+
+const ADMIN_WA = "628XXXXXXXXXX";
+
+function rupiah(value){
+
+  return new Intl.NumberFormat("id-ID",{
+    style:"currency",
+    currency:"IDR",
+    maximumFractionDigits:0
+  }).format(Number(value || 0));
+
+}
+
+function makeCode(){
+
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+  let result = "ZUX-";
+
+  for(let i=0;i<6;i++){
+    result += chars[Math.floor(Math.random()*chars.length)];
+  }
+
+  return result;
+}
+
+function escapeHTML(text){
+
+  return String(text ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+async function loadProducts(){
+
+  try{
+
+    await initFirebase();
+
+    const snapshot = await getDocs(
+      collection(db,"products")
+    );
+
+    productsEl.innerHTML = "";
+
+    if(snapshot.empty){
+
+      productsEl.innerHTML = `
+        <div class="empty">
+          Belum ada produk.
+        </div>
+      `;
+
+      return;
+    }
+
+    const products = [];
+
+    snapshot.forEach(item => {
+
+      products.push({
+        id:item.id,
+        ...item.data()
+      });
+
+    });
+
+    products.sort((a,b) =>
+      Number(a.createdAtMs || 0) -
+      Number(b.createdAtMs || 0)
+    );
+
+    products.forEach(product => {
+
+      const image =
+        product.image ||
+        product.imageUrl ||
+        "https://placehold.co/600x400?text=Produk";
+
+      const name =
+        product.name ||
+        "Produk";
+
+      const description =
+        product.description ||
+        "";
+
+      const price =
+        product.price ||
+        0;
+
+      const card = document.createElement("article");
+
+      card.className = "card";
+
+      card.innerHTML = `
+
+        <img
+          class="product-img"
+          src="${escapeHTML(image)}"
+          alt="${escapeHTML(name)}"
+          onerror="
+            this.src='https://placehold.co/600x400?text=Foto+Produk'
+          "
+        >
+
+        <div class="content">
+
+          <span class="badge">PRODUK</span>
+
+          <h2>${escapeHTML(name)}</h2>
+
+          <div class="desc">
+            ${escapeHTML(description)}
+          </div>
+
+          <div class="price">
+            ${rupiah(price)}
+          </div>
+
+          <button class="buy">
+            Beli ${escapeHTML(name)}
+          </button>
+
+        </div>
+      `;
+
+      card.querySelector(".buy")
+        .addEventListener("click",() => {
+
+          buyProduct(product);
+
+        });
+
+      productsEl.appendChild(card);
+
+    });
+
+  }catch(error){
+
+    console.error(error);
+
+    productsEl.innerHTML = `
+      <div class="empty">
+        ❌ Gagal memuat produk.<br><br>
+        ${escapeHTML(error.message)}
+      </div>
+    `;
+
+  }
+
+}
+
+async function buyProduct(product){
+
+  try{
+
+    await initFirebase();
+
+    const code = makeCode();
+
+    await addDoc(
+      collection(db,"orders"),
+      {
+        code:code,
+
+        productId:product.id,
+
+        productName:product.name || "Produk",
+
+        price:Number(product.price || 0),
+
+        status:"pending",
+
+        createdAt:serverTimestamp(),
+
+        createdAtMs:Date.now()
+      }
+    );
+
+    const message =
+      `Halo Admin Zuxcyn%0A%0A` +
+      `Saya ingin membeli:%0A` +
+      `Produk: ${product.name}%0A` +
+      `Harga: ${rupiah(product.price)}%0A` +
+      `Kode Pesanan: ${code}`;
+
+    window.open(
+      `https://wa.me/${ADMIN_WA}?text=${message}`,
+      "_blank"
+    );
+
+    alert(
+      `Pesanan berhasil dibuat!\n\nKode pesanan kamu:\n${code}\n\nSimpan kode ini.`
+    );
+
+  }catch(error){
+
+    alert(
+      "Gagal membuat pesanan:\n" +
+      error.message
+    );
+
+  }
+
+}
+
+window.checkOrder = async function(){
+
+  const input =
+    document.getElementById("orderCode");
+
+  const result =
+    document.getElementById("orderResult");
+
+  const code =
+    input.value.trim().toUpperCase();
+
+  if(!code){
+
+    result.innerHTML =
+      `<p style="color:#ff7777">Masukkan kode pesanan.</p>`;
+
+    return;
+
+  }
+
+  try{
+
+    await initFirebase();
+
+    const snapshot =
+      await getDocs(
+        collection(db,"orders")
+      );
+
+    let found = null;
+
+    snapshot.forEach(item => {
+
+      const data = item.data();
+
+      if(
+        String(data.code || "").toUpperCase() === code
+      ){
+
+        found = data;
+
+      }
+
+    });
+
+    if(!found){
+
+      result.innerHTML = `
+        <div style="
+          margin-top:15px;
+          padding:15px;
+          background:#201216;
+          border:1px solid #572731;
+          border-radius:10px;
+        ">
+          ❌ Pesanan tidak ditemukan.
+        </div>
+      `;
+
+      return;
+
+    }
+
+    let message = `
+      <div style="
+        margin-top:15px;
+        padding:15px;
+        background:#101d14;
+        border:1px solid #294f35;
+        border-radius:10px;
+      ">
+
+        <b>✅ Pesanan ditemukan</b><br><br>
+
+        Produk:
+        ${escapeHTML(found.productName)}<br>
+
+        Harga:
+        ${rupiah(found.price)}<br>
+
+        Status:
+        <b>${escapeHTML(found.status)}</b>
+
+    `;
+
+    if(found.status === "confirmed" && found.downloadUrl){
+
+      message += `
+
+        <br><br>
+
+        <a
+          href="${escapeHTML(found.downloadUrl)}"
+          target="_blank"
+          style="color:#9dbaff"
+        >
+          📥 Download Produk
+        </a>
+
+      `;
+
+    }
+
+    message += `</div>`;
+
+    result.innerHTML = message;
+
+  }catch(error){
+
+    result.innerHTML = `
+      <div style="
+        margin-top:15px;
+        padding:15px;
+        background:#201216;
+        border:1px solid #572731;
+        border-radius:10px;
+      ">
+        ❌ Gagal mengecek pesanan.<br><br>
+        ${escapeHTML(error.message)}
+      </div>
+    `;
+
+  }
+
+};
+
+loadProducts();
+
+</script>
+
+</body>
+</html>

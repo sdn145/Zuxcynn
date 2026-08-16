@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Admin Zuxcyn</title>
+
+<style>
+
+body{
+  margin:0;
+  padding:20px;
+  background:#050608;
+  color:white;
+  font-family:Arial,sans-serif;
+}
+
+.box{
+  max-width:650px;
+  margin:auto;
+  background:#11141b;
+  border:1px solid #292e39;
+  border-radius:18px;
+  padding:25px;
+}
+
+input{
+  width:100%;
+  box-sizing:border-box;
+  padding:15px;
+  margin:15px 0;
+  border-radius:10px;
+  background:#07090d;
+  border:1px solid #303542;
+  color:white;
+  font-size:16px;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.result{
+  margin-top:20px;
+  padding:15px;
+  border-radius:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>🔐 Admin Zuxcyn</h1>
+
+<p>
+Masukkan kode pesanan pembeli:
+</p>
+
+<input
+  id="code"
+  placeholder="ZUX-ABC123"
+>
+
+<button onclick="confirmOrder()">
+  ✅ Konfirmasi Pesanan
+</button>
+
+<div id="result"></div>
+
+</div>
+
+<script type="module">
+
+import {
+
+  db,
+  initFirebase,
+  collection,
+  getDocs,
+  doc,
+  updateDoc
+
+} from "./firebase-config.js";
+
+const result =
+  document.getElementById("result");
+
+function escapeHTML(text){
+
+  return String(text ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+window.confirmOrder = async function(){
+
+  const code =
+    document
+      .getElementById("code")
+      .value
+      .trim()
+      .toUpperCase();
+
+  if(!code){
+
+    result.innerHTML =
+      "Masukkan kode pesanan.";
+
+    return;
+
+  }
+
+  try{
+
+    await initFirebase();
+
+    const snapshot =
+      await getDocs(
+        collection(db,"orders")
+      );
+
+    let orderId=null;
+    let orderData=null;
+
+    snapshot.forEach(item=>{
+
+      const data=item.data();
+
+      if(
+        String(data.code || "")
+          .toUpperCase() === code
+      ){
+
+        orderId=item.id;
+        orderData=data;
+
+      }
+
+    });
+
+    if(!orderId){
+
+      result.className="result";
+
+      result.style.background="#281318";
+
+      result.innerHTML=`
+        ❌ Pesanan tidak ditemukan.
+      `;
+
+      return;
+
+    }
+
+    await updateDoc(
+      doc(db,"orders",orderId),
+      {
+        status:"confirmed",
+        confirmedAt:new Date().toISOString()
+      }
+    );
+
+    result.className="result";
+
+    result.style.background="#102218";
+
+    result.innerHTML=`
+
+      <h3>✅ Pesanan berhasil dikonfirmasi</h3>
+
+      <p>
+        Produk:
+        ${escapeHTML(orderData.productName)}
+      </p>
+
+      <p>
+        Kode:
+        ${escapeHTML(code)}
+      </p>
+
+      <p>
+        Status: <b>confirmed</b>
+      </p>
+
+    `;
+
+  }catch(error){
+
+    console.error(error);
+
+    result.className="result";
+
+    result.style.background="#281318";
+
+    result.innerHTML=`
+
+      ❌ Gagal mengonfirmasi.<br><br>
+
+      ${escapeHTML(error.message)}
+
+    `;
+
+  }
+
+};
+
+</script>
+
+</body>
+
+</html>
