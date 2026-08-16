@@ -7,7 +7,13 @@
 <title>Zuxcyn Preset & Pack</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   margin:0;
@@ -17,207 +23,265 @@ body{
 }
 
 header{
-  padding:14px 18px;
-  border-bottom:1px solid #282b36;
-  background:#0c0d12;
+  height:70px;
+  padding:12px 20px;
   display:flex;
   align-items:center;
   gap:12px;
+  background:#0c0d12;
+  border-bottom:1px solid #282b36;
 }
 
 .logo{
-  width:48px;
-  height:48px;
-  border-radius:13px;
+  width:45px;
+  height:45px;
+  border-radius:12px;
   object-fit:cover;
+  border:1px solid #303441;
 }
 
-.brand{font-weight:800}
-.sub{font-size:12px;color:#999}
+.brand{
+  font-weight:bold;
+  font-size:16px;
+}
 
-main{
-  max-width:1000px;
+.brand small{
+  display:block;
+  font-size:10px;
+  color:#888;
+  margin-top:3px;
+}
+
+.container{
+  max-width:1100px;
   margin:auto;
-  padding:30px 18px;
+  padding:30px 18px 60px;
 }
 
 .hero{
-  padding:15px 0 25px;
+  margin-bottom:25px;
 }
 
 .hero h1{
-  font-size:42px;
-  margin:0 0 8px;
+  margin:0 0 10px;
+  font-size:30px;
 }
 
 .hero p{
-  color:#aaa;
+  color:#999;
   line-height:1.6;
+  font-size:14px;
 }
 
-.grid{
+.products{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:20px;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
 }
 
 .card{
-  background:#12141b;
-  border:1px solid #292d39;
+  background:#101219;
+  border:1px solid #292d38;
   border-radius:20px;
   overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
 
-.preview{
+.product-img{
   width:100%;
   height:230px;
   object-fit:cover;
-  background:#191b23;
+  display:block;
 }
 
-.content{
+.card-body{
+  padding:18px;
+}
+
+.badge{
+  display:inline-block;
+  padding:6px 9px;
+  border-radius:8px;
+  background:#1c1f29;
+  color:#aaa;
+  font-size:10px;
+  margin-bottom:8px;
+}
+
+.card h2{
+  margin:4px 0 8px;
+  font-size:20px;
+}
+
+.description{
+  color:#999;
+  font-size:13px;
+  line-height:1.5;
+  min-height:40px;
+}
+
+.price{
+  font-size:22px;
+  font-weight:bold;
+  margin:15px 0;
+  color:#fff;
+}
+
+.price span{
+  color:#888;
+  font-size:12px;
+  font-weight:normal;
+}
+
+.buy-btn{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:11px;
+  background:#fff;
+  color:#08090d;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.buy-btn:active{
+  transform:scale(.98);
+}
+
+.orders{
+  margin-top:25px;
+  background:#101219;
+  border:1px solid #292d38;
+  border-radius:20px;
   padding:20px;
 }
 
-.tag{
-  font-size:11px;
-  color:#bbc1ff;
+.orders h2{
+  margin-top:0;
 }
 
-.title{
-  font-size:21px;
-  margin:8px 0;
-}
-
-.desc{
-  color:#a5a9b6;
+.orders p{
+  color:#999;
   font-size:13px;
   line-height:1.5;
 }
 
-.buy,
-.check{
+input{
   width:100%;
-  padding:13px;
-  border:0;
-  border-radius:12px;
-  background:#fff;
-  color:#08090d;
-  font-weight:800;
-  cursor:pointer;
-  margin-top:12px;
-}
-
-.notice{
-  display:none;
-  margin-top:12px;
   padding:14px;
-  border-radius:13px;
-  background:#151a16;
-  border:1px solid #35533b;
-  color:#bdebc3;
-  line-height:1.6;
-}
-
-.notice a{
-  display:block;
-  margin-top:10px;
-  padding:12px;
   border-radius:10px;
-  background:#fff;
-  color:#08090d;
-  font-weight:800;
-  text-decoration:none;
-  text-align:center;
-}
-
-.check-box{
-  margin-top:30px;
-  padding:20px;
   border:1px solid #303441;
-  border-radius:16px;
-  background:#101219;
-}
-
-.check-box input{
-  width:100%;
-  padding:13px;
-  border-radius:10px;
-  border:1px solid #444;
   background:#08090d;
   color:#fff;
-  margin-top:10px;
+  outline:none;
+  margin:8px 0;
 }
 
-.status{
-  margin-top:12px;
-  line-height:1.6;
+.check-btn{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:10px;
+  background:#fff;
+  color:#08090d;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.steps{
-  margin-top:25px;
-  padding:18px;
-  border:1px solid #303441;
-  border-radius:16px;
-  background:#101219;
-  color:#c4c8d4;
-  font-size:13px;
+#orderResult{
+  margin-top:15px;
   line-height:1.7;
+}
+
+.info{
+  margin-top:20px;
+  background:#101219;
+  border:1px solid #292d38;
+  border-radius:20px;
+  padding:18px;
+  color:#999;
+  font-size:13px;
+  line-height:1.8;
 }
 
 footer{
   text-align:center;
-  color:#666b7a;
-  padding:35px 10px;
-  font-size:12px;
+  color:#666;
+  font-size:11px;
+  padding:25px;
+}
+
+.modal-bg{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  z-index:999;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
 .modal{
-  position:fixed;
-  inset:0;
-  background:#000c;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-  z-index:9;
-}
-
-.modal.hide{
-  display:none;
-}
-
-.box{
+  width:100%;
   max-width:420px;
-  background:#12151d;
+  background:#12141b;
   border:1px solid #303441;
   border-radius:20px;
-  padding:24px;
-  text-align:center;
+  padding:22px;
 }
 
-.box p{
-  color:#afb3c0;
-  line-height:1.55;
+.modal h2{
+  margin-top:0;
 }
 
-.tiktok{
-  display:block;
-  padding:13px;
+.code{
+  background:#08090d;
+  border:1px dashed #555;
   border-radius:12px;
-  background:#ff2d55;
-  color:#fff;
-  text-decoration:none;
-  font-weight:800;
+  padding:16px;
+  text-align:center;
+  font-size:23px;
+  font-weight:bold;
+  letter-spacing:2px;
+  margin:15px 0;
 }
 
-.close{
-  margin-top:10px;
-  padding:11px 15px;
-  border:0;
+.wa-btn{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  padding:14px;
   border-radius:10px;
-  background:#292d39;
+  background:#fff;
+  color:#08090d;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.close-btn{
+  width:100%;
+  padding:13px;
+  border:1px solid #444;
+  border-radius:10px;
+  background:transparent;
   color:#fff;
+  cursor:pointer;
+}
+
+@media(max-width:700px){
+  .products{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:25px;
+  }
+
+  .product-img{
+    height:210px;
+  }
 }
 </style>
 </head>
@@ -225,187 +289,231 @@ footer{
 <body>
 
 <header>
-<img src="zuxcyn.jpg" class="logo" alt="Zuxcyn">
-<div>
-  <div class="brand">Preset & Pack Edit</div>
-  <div class="sub">By: Zuxcyn</div>
-</div>
+
+  <img
+    src="zuxcyn.jpg"
+    class="logo"
+    alt="Zuxcyn"
+  >
+
+  <div class="brand">
+    Preset & Pack Edit
+    <small>By: Zuxcyn</small>
+  </div>
+
 </header>
 
 
-<div id="popup" class="modal">
-<div class="box">
+<div class="container">
 
-<h2>👋 Selamat datang!</h2>
+  <section class="hero">
 
-<p>
-Jangan lupa follow TikTok
-<b>@zuxcynn</b>
-untuk mendukung Zuxcyn.
-</p>
+    <h1>
+      Preset & Pack Edit ⚡
+    </h1>
 
-<a
-class="tiktok"
-href="https://www.tiktok.com/@zuxcynn"
-target="_blank">
-Follow TikTok @zuxcynn
-</a>
+    <p>
+      Pilih produk yang kamu inginkan.
+      Setelah melakukan pembelian, simpan kode pesananmu
+      dan hubungi admin untuk konfirmasi.
+    </p>
 
-<button
-class="close"
-onclick="closePopup()">
-Lanjut ke website
-</button>
+  </section>
+
+
+  <!-- PRODUK -->
+
+  <div class="products">
+
+
+    <!-- FULL EDIT -->
+
+    <div class="card">
+
+      <img
+        src="full-edit.jpg"
+        class="product-img"
+        alt="FULL EDIT"
+      >
+
+      <div class="card-body">
+
+        <div class="badge">
+          PRESET
+        </div>
+
+        <h2>
+          FULL EDIT
+        </h2>
+
+        <div class="description">
+          Preset lengkap untuk kebutuhan edit Alight Motion.
+        </div>
+
+        <div class="price">
+          Rp5.000
+          <span> / Full Edit</span>
+        </div>
+
+        <button
+          class="buy-btn"
+          onclick="buyProduct('full')"
+        >
+          Beli Full Edit
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- PACK -->
+
+    <div class="card">
+
+      <img
+        src="badaa.jpg"
+        class="product-img"
+        alt="Badaa Transition"
+      >
+
+      <div class="card-body">
+
+        <div class="badge">
+          TRANSITION PACK
+        </div>
+
+        <h2>
+          + Badaa transition by: Zuxcyn
+        </h2>
+
+        <div class="description">
+          Transition pack untuk workflow edit Alight Motion.
+        </div>
+
+        <div class="price">
+          Rp2.000
+          <span> / Pack</span>
+        </div>
+
+        <button
+          class="buy-btn"
+          onclick="buyProduct('pack')"
+        >
+          Beli Pack
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- CEK PESANAN -->
+
+  <section class="orders">
+
+    <h2>
+      🔐 Cek Akses Pesanan
+    </h2>
+
+    <p>
+      Masukkan kode pesanan yang kamu dapat setelah membeli.
+    </p>
+
+    <input
+      id="checkCode"
+      placeholder="Contoh: ZUX-ABC123"
+      autocomplete="off"
+    >
+
+    <button
+      class="check-btn"
+      onclick="checkOrder()"
+    >
+      🔎 Cek Pesanan
+    </button>
+
+    <div id="orderResult"></div>
+
+  </section>
+
+
+  <!-- INFO -->
+
+  <div class="info">
+
+    <b style="color:white">
+      Alur pembelian:
+    </b>
+
+    <br>
+
+    1. Tekan tombol beli.<br>
+    2. Simpan kode pesanan.<br>
+    3. Hubungi WhatsApp admin untuk konfirmasi.<br>
+    4. Admin mengonfirmasi pesanan.<br>
+    5. Masukkan kode di bagian Cek Akses Pesanan.<br>
+    6. Jika sudah dikonfirmasi, tombol akses akan muncul.
+
+  </div>
 
 </div>
-</div>
-
-
-<main>
-
-<section class="hero">
-
-<h1>Preset & Pack Edit ⚡</h1>
-
-<p>
-Pilih produk yang kamu inginkan.
-Setelah pembelian, simpan kode pesananmu.
-Setelah pesanan dikonfirmasi penjual,
-cek kode untuk mendapatkan akses.
-</p>
-
-</section>
-
-
-<section class="grid">
-
-
-<article class="card">
-
-<img
-class="preview"
-src="preset_lenkap.jpg"
-alt="FULL EDIT">
-
-<div class="content">
-
-<div class="tag">PRESET</div>
-
-<h2 class="title">
-FULL EDIT
-</h2>
-
-<p class="desc">
-Preset lengkap untuk kebutuhan edit Alight Motion.
-</p>
-
-<button
-class="buy"
-onclick="buy('FULL EDIT','full')">
-Beli Pack & Preset
-</button>
-
-<div
-id="notice-full"
-class="notice">
-</div>
-
-</div>
-</article>
-
-
-<article class="card">
-
-<img
-class="preview"
-src="Pack.jpg"
-alt="+7 Badaa transition">
-
-<div class="content">
-
-<div class="tag">
-TRANSITION PACK
-</div>
-
-<h2 class="title">
-+7 Badaa transition by: Zuxcyn
-</h2>
-
-<p class="desc">
-Pack transition untuk workflow edit Alight Motion.
-</p>
-
-<button
-class="buy"
-onclick="buy('+7 Badaa transition by: Zuxcyn','badaa')">
-Beli Pack
-</button>
-
-<div
-id="notice-badaa"
-class="notice">
-</div>
-
-</div>
-</article>
-
-</section>
-
-
-<div class="check-box">
-
-<h2>🔐 Cek Akses Pesanan</h2>
-
-<p>
-Masukkan kode pesanan yang kamu dapat setelah membeli.
-</p>
-
-<input
-id="checkCode"
-placeholder="Contoh: ZUX-ABC123">
-
-<button
-class="check"
-onclick="checkOrder()">
-🔎 Cek Pesanan
-</button>
-
-<div
-id="status"
-class="status">
-</div>
-
-</div>
-
-
-<div class="steps">
-
-<b>Alur pembelian:</b><br>
-
-1. Tekan <b>Beli</b>.<br>
-2. Simpan kode pesanan.<br>
-3. Hubungi WhatsApp penjual.<br>
-4. Penjual mengonfirmasi pesanan.<br>
-5. Masukkan kode di bagian <b>Cek Akses Pesanan</b>.<br>
-6. Jika sudah dikonfirmasi, tombol akses preset akan muncul.
-
-</div>
-
-</main>
 
 
 <footer>
-© 2026 Zuxcyn — Preset & Pack Edit
+  © 2026 Zuxcyn — Preset & Pack Edit
 </footer>
+
+
+<!-- MODAL KODE PESANAN -->
+
+<div
+  class="modal-bg"
+  id="modalBg"
+>
+
+  <div class="modal">
+
+    <h2>
+      ✅ Pesanan Dibuat
+    </h2>
+
+    <p>
+      Simpan kode pesanan ini sebelum menghubungi admin.
+    </p>
+
+    <div
+      class="code"
+      id="generatedCode"
+    >
+    </div>
+
+    <a
+      id="waButton"
+      class="wa-btn"
+      target="_blank"
+    >
+      💬 Konfirmasi via WhatsApp
+    </a>
+
+    <button
+      class="close-btn"
+      onclick="closeModal()"
+    >
+      Tutup
+    </button>
+
+  </div>
+
+</div>
 
 
 <script type="module">
 
-import {
-  initializeApp
-}
+import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-
 
 import {
   getFirestore,
@@ -415,6 +523,8 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
+
+/* FIREBASE */
 
 const firebaseConfig = {
 
@@ -442,176 +552,222 @@ const firebaseConfig = {
 
 
 const app =
-initializeApp(firebaseConfig);
+  initializeApp(firebaseConfig);
 
 const db =
-getFirestore(app);
+  getFirestore(app);
 
 
-const WA =
-"6283848223299";
+/* PRODUK */
+
+const products = {
+
+  full: {
+
+    name:
+    "FULL EDIT",
+
+    price:
+    "Rp5.000",
+
+    link:
+    "https://alightcreative.com/am/share/u/HOOqSCWvegQQAJaKpPpOutWquMu1/p/XlCvUW5ze8-a614ba8f95b94bfe"
+
+  },
 
 
-const links = {
+  pack: {
 
-  full:
-  "https://alightcreative.com/am/share/u/HOOqSCWvegQQAJaKpPpOutWquMu1/p/XlCvUW5ze8-a614ba8f95b94bfe",
+    name:
+    "Badaa Transition Pack",
 
-  badaa:
-  "https://alightcreative.com/am/share/u/ORedvT0kuPbIaRkh2ZQQef2oAju2/p/oSdMFDryih-5038213ac6c8f450"
+    price:
+    "Rp2.000",
 
-};
-
-
-function closePopup(){
-
-  localStorage.setItem(
-    "zux_popup",
-    "1"
-  );
-
-  document
-  .getElementById("popup")
-  .classList
-  .add("hide");
-}
-
-
-if(
-  localStorage.getItem("zux_popup")
-  ===
-  "1"
-){
-
-  closePopup();
-
-}
-
-
-window.buy =
-async function(name,key){
-
-  const code =
-  "ZUX-" +
-  Math.random()
-  .toString(36)
-  .slice(2,8)
-  .toUpperCase();
-
-
-  try{
-
-    await setDoc(
-      doc(db,"orders",code),
-      {
-
-        product:name,
-
-        productKey:key,
-
-        approved:false,
-
-        link:links[key],
-
-        createdAt:
-        new Date().toISOString()
-
-      }
-    );
-
-
-    const waText =
-`Halo Zuxcyn, saya ingin membeli ${name}.
-
-Kode pesanan: ${code}
-
-Mohon konfirmasi pesanan saya.`;
-
-
-    window.open(
-      `https://wa.me/${WA}?text=${encodeURIComponent(waText)}`,
-      "_blank"
-    );
-
-
-    const notice =
-    document.getElementById(
-      "notice-"+key
-    );
-
-
-    notice.style.display =
-    "block";
-
-
-    notice.innerHTML = `
-      <b>✅ Pesanan dibuat!</b><br>
-      Kode pesanan kamu:
-      <b>${code}</b><br><br>
-
-      Simpan kode ini dan kirim ke WhatsApp
-      penjual untuk konfirmasi.
-
-      <a href="#cek"
-      onclick="document.getElementById('checkCode').value='${code}'">
-      🔐 Cek Status Pesanan
-      </a>
-    `;
-
-
-  }catch(error){
-
-    alert(
-      "Gagal membuat pesanan: "
-      + error.message
-    );
+    link:
+    "https://alightcreative.com/am/share/u/ORedvT0kuPbIaRkh2ZQQef2oAju2/p/oSdMFDryih-5038213ac6c8f450"
 
   }
 
 };
 
 
+/* NOMOR ADMIN */
+
+const adminWhatsApp =
+  "6283848223299";
+
+
+/* GENERATE KODE */
+
+function generateCode(){
+
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+  let random = "";
+
+  for(let i=0;i<6;i++){
+
+    random +=
+      chars[
+        Math.floor(
+          Math.random()*chars.length
+        )
+      ];
+
+  }
+
+  return "ZUX-" + random;
+
+}
+
+
+/* BELI PRODUK */
+
+window.buyProduct = async function(productKey){
+
+  const product =
+    products[productKey];
+
+  const code =
+    generateCode();
+
+  const resultData = {
+
+    approved:false,
+
+    product:
+      product.name,
+
+    price:
+      product.price,
+
+    link:
+      product.link,
+
+    createdAt:
+      new Date().toISOString()
+
+  };
+
+
+  try{
+
+    await setDoc(
+
+      doc(
+        db,
+        "orders",
+        code
+      ),
+
+      resultData
+
+    );
+
+
+    document
+      .getElementById("generatedCode")
+      .textContent =
+      code;
+
+
+    const message =
+      `Halo Admin Zuxcyn 👋%0A%0A` +
+      `Saya ingin konfirmasi pembelian.%0A%0A` +
+      `Kode Pesanan: ${code}%0A` +
+      `Produk: ${product.name}%0A` +
+      `Harga: ${product.price}%0A%0A` +
+      `Mohon dikonfirmasi. Terima kasih.`;
+
+
+    document
+      .getElementById("waButton")
+      .href =
+      `https://wa.me/${adminWhatsApp}?text=${message}`;
+
+
+    document
+      .getElementById("modalBg")
+      .style.display =
+      "flex";
+
+
+  }catch(error){
+
+    alert(
+      "Gagal membuat pesanan: " +
+      error.message
+    );
+
+    console.error(error);
+
+  }
+
+};
+
+
+/* TUTUP MODAL */
+
+window.closeModal =
+function(){
+
+  document
+    .getElementById("modalBg")
+    .style.display =
+    "none";
+
+};
+
+
+/* CEK PESANAN */
+
 window.checkOrder =
 async function(){
 
   const code =
-  document
-  .getElementById("checkCode")
-  .value
-  .trim()
-  .toUpperCase();
+    document
+      .getElementById("checkCode")
+      .value
+      .trim()
+      .toUpperCase();
 
-
-  const status =
-  document.getElementById("status");
+  const result =
+    document
+      .getElementById("orderResult");
 
 
   if(!code){
 
-    status.innerHTML =
-    "⚠️ Masukkan kode pesanan.";
+    result.innerHTML =
+      "⚠️ Masukkan kode pesanan.";
 
     return;
 
   }
 
 
-  status.innerHTML =
-  "⏳ Mengecek pesanan...";
+  result.innerHTML =
+    "⏳ Mengecek pesanan...";
 
 
   try{
 
-    const snap =
-    await getDoc(
-      doc(db,"orders",code)
-    );
+    const snapshot =
+      await getDoc(
+        doc(
+          db,
+          "orders",
+          code
+        )
+      );
 
 
-    if(!snap.exists()){
+    if(!snapshot.exists()){
 
-      status.innerHTML =
-      "❌ Kode pesanan tidak ditemukan.";
+      result.innerHTML =
+        "❌ Kode pesanan tidak ditemukan.";
 
       return;
 
@@ -619,81 +775,88 @@ async function(){
 
 
     const data =
-    snap.data();
+      snapshot.data();
 
 
-    if(data.approved === true){
+    if(data.approved !== true){
 
-      status.innerHTML = `
-
+      result.innerHTML = `
         <div style="
+          background:#1b1d25;
           padding:15px;
           border-radius:12px;
-          background:#151a16;
-          border:1px solid #35533b;
         ">
+          ⏳ <b>Pesanan belum dikonfirmasi.</b><br><br>
 
-        <b>✅ PESANAN SUDAH DIKONFIRMASI!</b>
+          Produk:
+          <b>${data.product || "-"}</b><br>
+
+          Harga:
+          <b>${data.price || "-"}</b><br><br>
+
+          Silakan hubungi admin melalui WhatsApp
+          untuk konfirmasi pembayaran.
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    result.innerHTML = `
+
+      <div style="
+        background:#151b17;
+        border:1px solid #294b34;
+        padding:15px;
+        border-radius:12px;
+      ">
+
+        <b>✅ PESANAN DIKONFIRMASI</b>
 
         <br><br>
 
         Produk:
-        <b>${data.product}</b>
+        <b>${data.product || "-"}</b>
+
+        <br>
+
+        Harga:
+        <b>${data.price || "-"}</b>
 
         <br><br>
 
         <a
-        href="${data.link}"
-        target="_blank"
-        style="
-          display:block;
-          padding:13px;
-          border-radius:10px;
-          background:white;
-          color:#08090d;
-          text-align:center;
-          font-weight:bold;
-          text-decoration:none;
-        ">
-        🔓 BUKA PRESET
+          href="${data.link}"
+          target="_blank"
+          style="
+            display:block;
+            text-align:center;
+            padding:13px;
+            background:white;
+            color:#08090d;
+            border-radius:10px;
+            text-decoration:none;
+            font-weight:bold;
+          "
+        >
+          🔓 Buka Akses Produk
         </a>
 
-        </div>
+      </div>
 
-      `;
-
-    }else{
-
-      status.innerHTML = `
-
-        <div style="
-          padding:15px;
-          border-radius:12px;
-          background:#17151a;
-          border:1px solid #49404f;
-        ">
-
-        ⏳ Pesanan belum dikonfirmasi.
-
-        <br><br>
-
-        Silakan tunggu konfirmasi dari
-        penjual.
-
-        </div>
-
-      `;
-
-    }
+    `;
 
 
   }catch(error){
 
     console.error(error);
 
-    status.innerHTML =
-    "❌ Gagal mengecek pesanan.<br>"
-    + error.message;
+    result.innerHTML = `
+      ❌ Gagal mengecek pesanan.<br><br>
+      ${error.message}
+    `;
 
   }
 
@@ -702,4 +865,4 @@ async function(){
 </script>
 
 </body>
-   </html>
+  </html>
